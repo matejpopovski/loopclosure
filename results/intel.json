@@ -1,0 +1,55 @@
+{
+  "beams": 180,
+  "closures": 285,
+  "command": "loopclosure replay data/intel.script.gz",
+  "ground_truth": "none: this log has no truth, so no ATE or RPE is reported",
+  "hardware": "Apple M3 Max, 36 GB, one thread; other jobs were running on the machine",
+  "keyframes": 2273,
+  "log_duration_s": 2691.287214040756,
+  "loop_stats": {
+    "accepted": 285,
+    "attempts": 304,
+    "optimizations": 278,
+    "rejected_ambiguous": 0,
+    "rejected_geometry": 1,
+    "rejected_inconsistent": 7,
+    "rejected_score": 18
+  },
+  "odometric_path_m": 504.51855299052653,
+  "revisit_agreement": {
+    "definition": "share of a later pass's points within 5 cm of a wall seen on an earlier pass",
+    "pairs": 258,
+    "raw_odometry": 0.008683174509731778,
+    "with_loop_closure": 0.5367747157732072,
+    "without_loop_closure": 0.01938997019757901
+  },
+  "scans": 13631,
+  "source": "intel_lab record, DSpace@MIT, hdl.handle.net/1721.1/62287, CC0 1.0",
+  "timing": {
+    "keyframe_step_max_ms": 35.286041999999995,
+    "keyframe_step_p50_ms": 1.1182919999999998,
+    "keyframe_step_p99_ms": 20.197667,
+    "parse_ms": 39.338792,
+    "real_time_factor": 450.01124933823445,
+    "total_with_closure_s": 5.98048875,
+    "total_without_closure_s": 2.639657375
+  },
+  "tracking_failures": 32,
+  "variants": [
+    {
+      "closures": 173,
+      "configuration": "kernel applied at once, no graduation",
+      "revisit_agreement": 0.3042422458515766
+    },
+    {
+      "closures": 285,
+      "configuration": "no robust kernel",
+      "revisit_agreement": 0.5367747157732072
+    },
+    {
+      "closures": 296,
+      "configuration": "loop search radius widened to 8 m",
+      "revisit_agreement": 0.5081128812686265
+    }
+  ]
+}

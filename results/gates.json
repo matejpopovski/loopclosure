@@ -1,0 +1,397 @@
+{
+  "blocks": [
+    {
+      "rows": [
+        {
+          "configuration": "all safeguards",
+          "worlds": [
+            {
+              "ate_rmse_m": {
+                "max": 0.31898773223102145,
+                "mean": 0.10974877622554043,
+                "median": 0.09757535249062575,
+                "std": 0.08199352201223341
+              },
+              "closures_per_run": 112.3,
+              "false_closures_total": 0,
+              "world": "office"
+            },
+            {
+              "ate_rmse_m": {
+                "max": 0.11070400233215247,
+                "mean": 0.08606792639070761,
+                "median": 0.08473151267204215,
+                "std": 0.013068992744068364
+              },
+              "closures_per_run": 83.7,
+              "false_closures_total": 0,
+              "world": "warehouse"
+            },
+            {
+              "ate_rmse_m": {
+                "max": 0.09822030694680431,
+                "mean": 0.04325550354124679,
+                "median": 0.04692455625339527,
+                "std": 0.023999763349708828
+              },
+              "closures_per_run": 77.1,
+              "false_closures_total": 0,
+              "world": "atrium"
+            }
+          ]
+        },
+        {
+          "configuration": "no pairwise consistency check",
+          "worlds": [
+            {
+              "ate_rmse_m": {
+                "max": 0.3166014394552931,
+                "mean": 0.10922289136037411,
+                "median": 0.09460177243614153,
+                "std": 0.08120921961019496
+              },
+              "closures_per_run": 112.9,
+              "false_closures_total": 0,
+              "world": "office"
+            },
+            {
+              "ate_rmse_m": {
+                "max": 0.11565424521871455,
+                "mean": 0.08663622761312342,
+                "median": 0.08426939739488973,
+                "std": 0.011773821051231164
+              },
+              "closures_per_run": 82.7,
+              "false_closures_total": 0,
+              "world": "warehouse"
+            },
+            {
+              "ate_rmse_m": {
+                "max": 0.10942769649825858,
+                "mean": 0.042674321579854305,
+                "median": 0.03843961771449575,
+                "std": 0.027549220490189295
+              },
+              "closures_per_run": 77.3,
+              "false_closures_total": 0,
+              "world": "atrium"
+            }
+          ]
+        },
+        {
+          "configuration": "no runner-up ambiguity test",
+          "worlds": [
+            {
+              "ate_rmse_m": {
+                "max": 4.072001480900016,
+                "mean": 1.8544103280022948,
+                "median": 1.9103971374261692,
+                "std": 1.1895096367108242
+              },
+              "closures_per_run": 130.5,
+              "false_closures_total": 521,
+              "world": "office"
+            },
+            {
+              "ate_rmse_m": {
+                "max": 0.11070400233215247,
+                "mean": 0.08606792639070761,
+                "median": 0.08473151267204215,
+                "std": 0.013068992744068364
+              },
+              "closures_per_run": 83.7,
+              "false_closures_total": 0,
+              "world": "warehouse"
+            },
+            {
+              "ate_rmse_m": {
+                "max": 0.09822030694680431,
+                "mean": 0.04325550354124679,
+                "median": 0.04692455625339527,
+                "std": 0.023999763349708828
+              },
+              "closures_per_run": 77.1,
+              "false_closures_total": 0,
+              "world": "atrium"
+            }
+          ]
+        },
+        {
+          "configuration": "no robust kernel",
+          "worlds": [
+            {
+              "ate_rmse_m": {
+                "max": 0.31900657370280205,
+                "mean": 0.11004454570866733,
+                "median": 0.09732290903742297,
+                "std": 0.08190508830797827
+              },
+              "closures_per_run": 112.2,
+              "false_closures_total": 0,
+              "world": "office"
+            },
+            {
+              "ate_rmse_m": {
+                "max": 0.11051570156951696,
+                "mean": 0.0859904808427279,
+                "median": 0.08473151267204215,
+                "std": 0.013021507559530882
+              },
+              "closures_per_run": 83.7,
+              "false_closures_total": 0,
+              "world": "warehouse"
+            },
+            {
+              "ate_rmse_m": {
+                "max": 0.09822030419424717,
+                "mean": 0.04315179626983619,
+                "median": 0.04692455625339527,
+                "std": 0.024062280895004385
+              },
+              "closures_per_run": 77.1,
+              "false_closures_total": 0,
+              "world": "atrium"
+            }
+          ]
+        },
+        {
+          "configuration": "kernel applied at once, no graduation",
+          "worlds": [
+            {
+              "ate_rmse_m": {
+                "max": 0.3176869854519087,
+                "mean": 0.11037968895003059,
+                "median": 0.09757495138736431,
+                "std": 0.08128940940156835
+              },
+              "closures_per_run": 112.4,
+              "false_closures_total": 0,
+              "world": "office"
+            },
+            {
+              "ate_rmse_m": {
+                "max": 0.1311286674426174,
+                "mean": 0.0894860326550265,
+                "median": 0.08455626722862361,
+                "std": 0.01830580961725033
+              },
+              "closures_per_run": 83.7,
+              "false_closures_total": 0,
+              "world": "warehouse"
+            },
+            {
+              "ate_rmse_m": {
+                "max": 0.09648859832448248,
+                "mean": 0.04322829729530745,
+                "median": 0.047854845331639806,
+                "std": 0.0244111100338344
+              },
+              "closures_per_run": 77.1,
+              "false_closures_total": 0,
+              "world": "atrium"
+            }
+          ]
+        }
+      ],
+      "search": "default search radius"
+    },
+    {
+      "rows": [
+        {
+          "configuration": "all safeguards",
+          "worlds": [
+            {
+              "ate_rmse_m": {
+                "max": 0.3187264708998445,
+                "mean": 0.10990715561623199,
+                "median": 0.09881099316690874,
+                "std": 0.08137298220918633
+              },
+              "closures_per_run": 114.6,
+              "false_closures_total": 0,
+              "world": "office"
+            },
+            {
+              "ate_rmse_m": {
+                "max": 2.782180306959077,
+                "mean": 1.4177171576032914,
+                "median": 2.7168081302517724,
+                "std": 1.4033227948875013
+              },
+              "closures_per_run": 64.3,
+              "false_closures_total": 155,
+              "world": "warehouse"
+            },
+            {
+              "ate_rmse_m": {
+                "max": 0.09822030694680431,
+                "mean": 0.04324183135857053,
+                "median": 0.04692455625339527,
+                "std": 0.024077146722141785
+              },
+              "closures_per_run": 77.1,
+              "false_closures_total": 0,
+              "world": "atrium"
+            }
+          ]
+        },
+        {
+          "configuration": "no pairwise consistency check",
+          "worlds": [
+            {
+              "ate_rmse_m": {
+                "max": 0.3192140083428842,
+                "mean": 0.10878691014768269,
+                "median": 0.09453330060604881,
+                "std": 0.0819364724887561
+              },
+              "closures_per_run": 113.7,
+              "false_closures_total": 0,
+              "world": "office"
+            },
+            {
+              "ate_rmse_m": {
+                "max": 2.8069986985797644,
+                "mean": 1.153439635712813,
+                "median": 0.10039872677645789,
+                "std": 1.377879724081075
+              },
+              "closures_per_run": 67.3,
+              "false_closures_total": 111,
+              "world": "warehouse"
+            },
+            {
+              "ate_rmse_m": {
+                "max": 0.10942769649825858,
+                "mean": 0.04264098631714679,
+                "median": 0.03758299575731527,
+                "std": 0.027533628887982282
+              },
+              "closures_per_run": 77.3,
+              "false_closures_total": 0,
+              "world": "atrium"
+            }
+          ]
+        },
+        {
+          "configuration": "no runner-up ambiguity test",
+          "worlds": [
+            {
+              "ate_rmse_m": {
+                "max": 2.7777906599813003,
+                "mean": 1.4476536070906438,
+                "median": 1.706552642065023,
+                "std": 0.8678011730167121
+              },
+              "closures_per_run": 142.0,
+              "false_closures_total": 468,
+              "world": "office"
+            },
+            {
+              "ate_rmse_m": {
+                "max": 2.8966328529922802,
+                "mean": 1.4240245806104923,
+                "median": 2.6902052793001783,
+                "std": 1.4143538595971956
+              },
+              "closures_per_run": 65.8,
+              "false_closures_total": 171,
+              "world": "warehouse"
+            },
+            {
+              "ate_rmse_m": {
+                "max": 0.09822030694680431,
+                "mean": 0.04324183135857053,
+                "median": 0.04692455625339527,
+                "std": 0.024077146722141785
+              },
+              "closures_per_run": 77.1,
+              "false_closures_total": 0,
+              "world": "atrium"
+            }
+          ]
+        },
+        {
+          "configuration": "no robust kernel",
+          "worlds": [
+            {
+              "ate_rmse_m": {
+                "max": 0.3187264708998445,
+                "mean": 0.10936308955404588,
+                "median": 0.09792879985037957,
+                "std": 0.08141825308949331
+              },
+              "closures_per_run": 114.6,
+              "false_closures_total": 0,
+              "world": "office"
+            },
+            {
+              "ate_rmse_m": {
+                "max": 4.783537642979347,
+                "mean": 3.219981731300731,
+                "median": 2.6181931548681954,
+                "std": 1.0244391566609237
+              },
+              "closures_per_run": 67.7,
+              "false_closures_total": 306,
+              "world": "warehouse"
+            },
+            {
+              "ate_rmse_m": {
+                "max": 0.09822030419424717,
+                "mean": 0.04328781290732374,
+                "median": 0.04692455625339527,
+                "std": 0.02403852577416823
+              },
+              "closures_per_run": 77.1,
+              "false_closures_total": 0,
+              "world": "atrium"
+            }
+          ]
+        },
+        {
+          "configuration": "kernel applied at once, no graduation",
+          "worlds": [
+            {
+              "ate_rmse_m": {
+                "max": 0.31790365522678327,
+                "mean": 0.1094556965056542,
+                "median": 0.09967945043447654,
+                "std": 0.08116969933637389
+              },
+              "closures_per_run": 114.4,
+              "false_closures_total": 0,
+              "world": "office"
+            },
+            {
+              "ate_rmse_m": {
+                "max": 0.10301869399712996,
+                "mean": 0.08579414925757943,
+                "median": 0.08548127795730516,
+                "std": 0.011618943860873837
+              },
+              "closures_per_run": 86.2,
+              "false_closures_total": 34,
+              "world": "warehouse"
+            },
+            {
+              "ate_rmse_m": {
+                "max": 0.09648859832448248,
+                "mean": 0.042107088013576134,
+                "median": 0.037839215025478545,
+                "std": 0.024165217901209877
+              },
+              "closures_per_run": 77.3,
+              "false_closures_total": 0,
+              "world": "atrium"
+            }
+          ]
+        }
+      ],
+      "search": "search radius widened to 8 m"
+    }
+  ],
+  "command": "loopclosure gates --seeds 10",
+  "seeds": "0..10",
+  "source": "simulator; ATE against simulator ground truth"
+}

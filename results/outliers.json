@@ -1,0 +1,248 @@
+{
+  "command": "loopclosure outliers --seeds 10",
+  "rows": [
+    {
+      "ate_rmse_m": {
+        "max": 0.31898773223102145,
+        "mean": 0.07969073538583164,
+        "median": 0.07576359766202584,
+        "std": 0.055691368988765935
+      },
+      "false_closures": 0,
+      "kernel": "none"
+    },
+    {
+      "ate_rmse_m": {
+        "max": 0.31898773223102145,
+        "mean": 0.07963799866062828,
+        "median": 0.07576359766202584,
+        "std": 0.05568973924291927
+      },
+      "false_closures": 0,
+      "kernel": "huber"
+    },
+    {
+      "ate_rmse_m": {
+        "max": 0.318989997724354,
+        "mean": 0.07917162182958029,
+        "median": 0.07575499339970013,
+        "std": 0.05549988537272954
+      },
+      "false_closures": 0,
+      "kernel": "cauchy"
+    },
+    {
+      "ate_rmse_m": {
+        "max": 0.31898773223102145,
+        "mean": 0.07969073538583164,
+        "median": 0.07576359766202584,
+        "std": 0.055691368988765935
+      },
+      "false_closures": 0,
+      "kernel": "dcs, tight start only"
+    },
+    {
+      "ate_rmse_m": {
+        "max": 0.31898773223102145,
+        "mean": 0.07969073538583159,
+        "median": 0.07576359766202584,
+        "std": 0.05569136898876599
+      },
+      "false_closures": 0,
+      "kernel": "dcs, wide start only"
+    },
+    {
+      "ate_rmse_m": {
+        "max": 0.31898773223102145,
+        "mean": 0.07969073538583159,
+        "median": 0.07576359766202584,
+        "std": 0.05569136898876599
+      },
+      "false_closures": 0,
+      "kernel": "dcs, both starts"
+    },
+    {
+      "ate_rmse_m": {
+        "max": 4.62860221971201,
+        "mean": 2.669537783292924,
+        "median": 2.603003333335493,
+        "std": 0.6769201047721976
+      },
+      "false_closures": 10,
+      "kernel": "none"
+    },
+    {
+      "ate_rmse_m": {
+        "max": 2.4451475778660545,
+        "mean": 1.3660293745711836,
+        "median": 1.3677715544982854,
+        "std": 0.4880305743790472
+      },
+      "false_closures": 10,
+      "kernel": "huber"
+    },
+    {
+      "ate_rmse_m": {
+        "max": 0.41091151508859397,
+        "mean": 0.10122566615469318,
+        "median": 0.08142977232405908,
+        "std": 0.08681356198731681
+      },
+      "false_closures": 10,
+      "kernel": "cauchy"
+    },
+    {
+      "ate_rmse_m": {
+        "max": 0.3194064780657661,
+        "mean": 0.07878028292198161,
+        "median": 0.07071438433385971,
+        "std": 0.05644416635086418
+      },
+      "false_closures": 10,
+      "kernel": "dcs, tight start only"
+    },
+    {
+      "ate_rmse_m": {
+        "max": 2.9014151420254515,
+        "mean": 0.6496469442630383,
+        "median": 0.4822001488739909,
+        "std": 0.749336671803913
+      },
+      "false_closures": 10,
+      "kernel": "dcs, wide start only"
+    },
+    {
+      "ate_rmse_m": {
+        "max": 1.0881999734452736,
+        "mean": 0.12959293388633303,
+        "median": 0.08352051811770683,
+        "std": 0.20761337359668375
+      },
+      "false_closures": 10,
+      "kernel": "dcs, both starts"
+    },
+    {
+      "ate_rmse_m": {
+        "max": 3.368567396828288,
+        "mean": 2.5882525723464713,
+        "median": 2.5637694762389276,
+        "std": 0.40369145022145764
+      },
+      "false_closures": 50,
+      "kernel": "none"
+    },
+    {
+      "ate_rmse_m": {
+        "max": 1.8416258257299787,
+        "mean": 1.157348253822471,
+        "median": 1.0352619504101748,
+        "std": 0.32966651051700624
+      },
+      "false_closures": 50,
+      "kernel": "huber"
+    },
+    {
+      "ate_rmse_m": {
+        "max": 0.492941327007519,
+        "mean": 0.16596196765931975,
+        "median": 0.105285743601181,
+        "std": 0.11828226218884087
+      },
+      "false_closures": 50,
+      "kernel": "cauchy"
+    },
+    {
+      "ate_rmse_m": {
+        "max": 0.3919908433176116,
+        "mean": 0.09251985847905268,
+        "median": 0.08367260759462684,
+        "std": 0.07665957711879448
+      },
+      "false_closures": 50,
+      "kernel": "dcs, tight start only"
+    },
+    {
+      "ate_rmse_m": {
+        "max": 1.4732740321921778,
+        "mean": 0.7726914960018916,
+        "median": 0.8502986293640337,
+        "std": 0.47086773702026663
+      },
+      "false_closures": 50,
+      "kernel": "dcs, wide start only"
+    },
+    {
+      "ate_rmse_m": {
+        "max": 1.2106033238330574,
+        "mean": 0.16770525525144622,
+        "median": 0.08416529861301146,
+        "std": 0.28993901866600774
+      },
+      "false_closures": 50,
+      "kernel": "dcs, both starts"
+    },
+    {
+      "ate_rmse_m": {
+        "max": 3.542779040907907,
+        "mean": 2.56306717210952,
+        "median": 2.3622609235061462,
+        "std": 0.49439939813230394
+      },
+      "false_closures": 200,
+      "kernel": "none"
+    },
+    {
+      "ate_rmse_m": {
+        "max": 1.4811288137772889,
+        "mean": 0.9750551449098468,
+        "median": 0.8550507624776602,
+        "std": 0.2702639905771611
+      },
+      "false_closures": 200,
+      "kernel": "huber"
+    },
+    {
+      "ate_rmse_m": {
+        "max": 0.49069591555331593,
+        "mean": 0.23177018033868887,
+        "median": 0.1856315170107481,
+        "std": 0.1411787508434108
+      },
+      "false_closures": 200,
+      "kernel": "cauchy"
+    },
+    {
+      "ate_rmse_m": {
+        "max": 0.5416888497401096,
+        "mean": 0.1336893337883701,
+        "median": 0.08976579217120208,
+        "std": 0.10974993050546182
+      },
+      "false_closures": 200,
+      "kernel": "dcs, tight start only"
+    },
+    {
+      "ate_rmse_m": {
+        "max": 1.8707124726927566,
+        "mean": 0.8618807098709366,
+        "median": 0.9101102628954353,
+        "std": 0.42548150015361996
+      },
+      "false_closures": 200,
+      "kernel": "dcs, wide start only"
+    },
+    {
+      "ate_rmse_m": {
+        "max": 0.5416888497401096,
+        "mean": 0.14378843463665344,
+        "median": 0.08976579217120208,
+        "std": 0.12698120875304994
+      },
+      "false_closures": 200,
+      "kernel": "dcs, both starts"
+    }
+  ],
+  "seeds": "0..10",
+  "source": "simulator; false edges added to the finished graph, then re-optimised",
+  "worlds": "office, warehouse, atrium"
+}

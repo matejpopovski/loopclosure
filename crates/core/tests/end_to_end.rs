@@ -97,14 +97,14 @@ fn keyframes_are_spaced_by_motion_not_by_time() {
 }
 
 #[test]
-fn revisit_residual_separates_a_closed_map_from_a_drifted_one() {
+fn revisit_agreement_separates_a_closed_map_from_a_drifted_one() {
     let data = frames(WorldKind::Atrium, 1006);
     let with = run(&data, true);
     let without = run(&data, false);
     let pairs = with.revisit_pairs(5, 2.0);
     assert!(pairs.len() > 30, "{} pairs", pairs.len());
-    let closed = with.revisit_residual(with.trajectory(), &pairs, 0.5);
-    let drifted = with.revisit_residual(without.trajectory(), &pairs, 0.5);
-    assert!(closed < 0.05, "closed {closed}");
-    assert!(drifted > 2.0 * closed, "{drifted} vs {closed}");
+    let closed = with.revisit_agreement(with.trajectory(), &pairs, 0.05);
+    let drifted = with.revisit_agreement(without.trajectory(), &pairs, 0.05);
+    assert!(closed > 0.5, "closed {closed}");
+    assert!(closed > 1.5 * drifted, "{closed} vs {drifted}");
 }

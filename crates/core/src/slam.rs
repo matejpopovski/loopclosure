@@ -45,11 +45,6 @@ pub struct LoopConfig {
     pub min_score: f64,
     pub min_inlier_ratio: f64,
     pub max_rms: f64,
-    /// Smallest allowed ratio of the weak to the strong translation eigenvalue
-    /// of the match Hessian. A stretch of bare corridor matches every other at
-    /// any offset along its axis, and such a match says nothing that survives a
-    /// wrong correspondence.
-    pub min_conditioning: f64,
     /// Share of the score given up at the edge of the search window, resolving
     /// plateaus towards the current estimate.
     pub prior_weight: f64,
@@ -94,22 +89,9 @@ pub struct SlamConfig {
     pub icp: IcpOptions,
     pub loop_closure: LoopConfig,
     pub optimize: OptimizeOptions,
-}
-
-impl SlamConfig {
-    /// Settings for the Intel Research Lab log.
-    ///
-    /// The only change from the default is a wider loop search. The Pioneer's
-    /// odometry and the 1-degree scanner let heading run away by tens of degrees
-    /// per lap, far beyond what the simulated robot drifts, so the window must be
-    /// wider. The price is visible in the warehouse: `loopclosure aliasing` shows
-    /// what a window this wide does in a building with repeating aisles.
-    pub fn intel_lab() -> Self {
-        let mut config = Self::default();
-        config.loop_closure.radius_growth = 0.05;
-        config.loop_closure.radius_max = 8.0;
-        config
-    }
+    /// Also try a start that tightens the robust kernel in stages, see
+    /// [`PoseGraph::optimize_graduated`].
+    pub graduated: bool,
 }
 
 impl Default for SlamConfig {
@@ -157,7 +139,6 @@ impl Default for SlamConfig {
                 min_score: 0.35,
                 min_inlier_ratio: 0.45,
                 max_rms: 0.09,
-                min_conditioning: 0.05,
                 prior_weight: 0.02,
                 max_ambiguity: 0.92,
                 peak_separation: 0.6,
@@ -167,12 +148,13 @@ impl Default for SlamConfig {
                 consistency_rotation: 4f64.to_radians(),
             },
             optimize: OptimizeOptions::default(),
+            graduated: true,
         }
     }
 }
 
 /// Pairs of keyframes from different visits to the same place, for
-/// [`Slam::revisit_residual`].
+/// [`Slam::revisit_agreement`].
 pub type RevisitPairs = Vec<(usize, usize)>;
 
 /// A scan kept as a graph node.
@@ -236,18 +218,6 @@ fn diagonal(a: f64, b: f64, c: f64) -> Mat3 {
     [[a, 0.0, 0.0], [0.0, b, 0.0], [0.0, 0.0, c]]
 }
 
-/// Ratio of the smaller to the larger eigenvalue of the translation block.
-fn translation_conditioning(h: &Mat3) -> f64 {
-    let half_trace = 0.5 * (h[0][0] + h[1][1]);
-    let spread = (0.25 * (h[0][0] - h[1][1]).powi(2) + h[0][1] * h[0][1]).sqrt();
-    let (major, minor) = (half_trace + spread, half_trace - spread);
-    if major > 0.0 {
-        minor / major
-    } else {
-        0.0
-    }
-}
-
 impl Slam {
     pub fn new(config: SlamConfig, lidar: LidarModel) -> Self {
         Self {
@@ -304,49 +274,41 @@ impl Slam {
         pairs
     }
 
-    /// A ground-truth-free consistency measure: the median distance from points
-    /// of one visit to the wall seen on the other, when placed by `poses`.
+    /// A ground-truth-free consistency measure: the share of a later visit's
+    /// points lying within `tolerance` of a wall seen on the earlier visit, when
+    /// both are placed by `poses`.
     ///
     /// With no truth for a real log, ATE is unavailable, but a wall observed on
-    /// two passes should land in one place. Distances are capped at `cap` so one
-    /// far miss cannot dominate. Evaluating two trajectories on the same pairs
-    /// makes them directly comparable.
-    pub fn revisit_residual(&self, poses: &[Pose2], pairs: &RevisitPairs, cap: f64) -> f64 {
-        let mut distances = Vec::new();
+    /// two passes should land in one place. Points seeing something the earlier
+    /// visit did not count as misses, so the value tops out below 1. It only
+    /// means something relative to another trajectory scored on the same pairs.
+    pub fn revisit_agreement(&self, poses: &[Pose2], pairs: &RevisitPairs, tolerance: f64) -> f64 {
+        const NEIGHBOURS: usize = 3;
+        let (mut hits, mut total) = (0usize, 0usize);
         for &(i, k) in pairs {
-            let (older, newer) = (&self.keyframes[i], &self.keyframes[k]);
-            let (s, c) = poses[i].theta.sin_cos();
-            let world: Vec<[f64; 2]> = older
-                .oriented
-                .points
-                .iter()
-                .map(|p| poses[i].transform(*p))
-                .collect();
-            let normals: Vec<[f64; 2]> = older
-                .oriented
-                .normals
-                .iter()
-                .map(|n| [c * n[0] - s * n[1], s * n[0] + c * n[1]])
-                .collect();
-            if world.is_empty() {
-                continue;
-            }
-            let cloud = ReferenceCloud::new(world, normals, cap);
-            for p in &newer.query {
-                distances.push(
-                    cloud
-                        .line_distance(poses[k].transform(*p), cap)
-                        .unwrap_or(cap),
+            let (mut world, mut normals) = (Vec::new(), Vec::new());
+            let last = (i + NEIGHBOURS).min(self.keyframes.len() - 1);
+            for older in i.saturating_sub(NEIGHBOURS)..=last {
+                let (s, c) = poses[older].theta.sin_cos();
+                let oriented = &self.keyframes[older].oriented;
+                world.extend(oriented.points.iter().map(|p| poses[older].transform(*p)));
+                normals.extend(
+                    oriented
+                        .normals
+                        .iter()
+                        .map(|n| [c * n[0] - s * n[1], s * n[0] + c * n[1]]),
                 );
             }
+            let cloud = ReferenceCloud::new(world, normals, 0.3);
+            for p in &self.keyframes[k].query {
+                total += 1;
+                let q = poses[k].transform(*p);
+                if cloud.line_distance(q, 0.3).is_some_and(|d| d <= tolerance) {
+                    hits += 1;
+                }
+            }
         }
-        if distances.is_empty() {
-            return 0.0;
-        }
-        let middle = distances.len() / 2;
-        *distances
-            .select_nth_unstable_by(middle, |a, b| a.total_cmp(b))
-            .1
+        hits as f64 / total.max(1) as f64
     }
 
     /// Feed one frame. Frames closer than the keyframe thresholds to the last
@@ -412,7 +374,8 @@ impl Slam {
         if self.config.loop_closure.enabled && to.is_multiple_of(self.config.loop_closure.every) {
             outcome.closures_added = self.search_for_loop(to);
             if outcome.closures_added > 0 {
-                self.last_optimization = self.graph.optimize_graduated(&self.config.optimize);
+                let options = self.config.optimize;
+                self.last_optimization = self.run_optimizer(&options);
                 self.stats.optimizations += 1;
                 outcome.optimized = true;
             }
@@ -427,8 +390,16 @@ impl Slam {
             relative_tolerance: 1e-7,
             ..self.config.optimize
         };
-        self.last_optimization = self.graph.optimize_graduated(&options);
+        self.last_optimization = self.run_optimizer(&options);
         self.last_optimization
+    }
+
+    fn run_optimizer(&mut self, options: &OptimizeOptions) -> OptimizeReport {
+        if self.config.graduated {
+            self.graph.optimize_graduated(options)
+        } else {
+            self.graph.optimize(options)
+        }
     }
 
     fn make_keyframe(&self, frame: &Frame) -> Keyframe {
@@ -610,10 +581,7 @@ impl Slam {
         }
         let cloud = ReferenceCloud::new(points, normals, self.config.icp.coarse_distance);
         let matched = refine(&cloud, &query, found.pose, None, &self.config.icp);
-        if matched.inlier_ratio < cfg.min_inlier_ratio
-            || matched.rms > cfg.max_rms
-            || translation_conditioning(&matched.hessian) < cfg.min_conditioning
-        {
+        if matched.inlier_ratio < cfg.min_inlier_ratio || matched.rms > cfg.max_rms {
             self.stats.rejected_geometry += 1;
             return 0;
         }

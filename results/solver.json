@@ -1,0 +1,130 @@
+{
+  "command": "loopclosure solver --repeats 7",
+  "graph": "generated Manhattan-world random walk (seed 7), not the published M3500",
+  "hardware": "Apple M3 Max, 36 GB, one thread; other jobs were running on the machine",
+  "rows": [
+    {
+      "amd": {
+        "analyse_ms": 0.235958,
+        "assemble_ms": 0.048541999999999995,
+        "factor_and_solve_ms": 0.330583,
+        "nnz_l": 20208,
+        "unknowns": 1497
+      },
+      "closures": 240,
+      "dense": {
+        "factor_and_solve_ms": 431.094625
+      },
+      "natural": {
+        "analyse_ms": 0.5167499999999999,
+        "assemble_ms": 0.043083,
+        "factor_and_solve_ms": 11.526416,
+        "nnz_l": 192234,
+        "unknowns": 1497
+      },
+      "nodes": 500,
+      "rcm": {
+        "analyse_ms": 0.205625,
+        "assemble_ms": 0.045000000000000005,
+        "factor_and_solve_ms": 0.79475,
+        "nnz_l": 44481,
+        "unknowns": 1497
+      }
+    },
+    {
+      "amd": {
+        "analyse_ms": 0.367041,
+        "assemble_ms": 0.08625,
+        "factor_and_solve_ms": 0.702458,
+        "nnz_l": 44703,
+        "unknowns": 2997
+      },
+      "closures": 493,
+      "dense": {
+        "factor_and_solve_ms": 4615.423041999999
+      },
+      "natural": {
+        "analyse_ms": 2.134166,
+        "assemble_ms": 0.093458,
+        "factor_and_solve_ms": 111.33675,
+        "nnz_l": 867933,
+        "unknowns": 2997
+      },
+      "nodes": 1000,
+      "rcm": {
+        "analyse_ms": 0.561041,
+        "assemble_ms": 0.089417,
+        "factor_and_solve_ms": 4.792958,
+        "nnz_l": 153918,
+        "unknowns": 2997
+      }
+    },
+    {
+      "amd": {
+        "analyse_ms": 1.836958,
+        "assemble_ms": 0.352417,
+        "factor_and_solve_ms": 5.416875,
+        "nnz_l": 212826,
+        "unknowns": 10497
+      },
+      "closures": 1981,
+      "dense": null,
+      "natural": {
+        "analyse_ms": 36.243875,
+        "assemble_ms": 0.450958,
+        "factor_and_solve_ms": 7915.3881249999995,
+        "nnz_l": 12221364,
+        "unknowns": 10497
+      },
+      "nodes": 3500,
+      "rcm": {
+        "analyse_ms": 2.339375,
+        "assemble_ms": 0.377584,
+        "factor_and_solve_ms": 22.509375000000002,
+        "nnz_l": 651684,
+        "unknowns": 10497
+      }
+    },
+    {
+      "amd": {
+        "analyse_ms": 7.518375,
+        "assemble_ms": 1.334375,
+        "factor_and_solve_ms": 32.962958,
+        "nnz_l": 786375,
+        "unknowns": 29997
+      },
+      "closures": 6741,
+      "dense": null,
+      "natural": null,
+      "nodes": 10000,
+      "rcm": {
+        "analyse_ms": 14.926541,
+        "assemble_ms": 2.5842500000000004,
+        "factor_and_solve_ms": 529.5965,
+        "nnz_l": 4880160,
+        "unknowns": 29997
+      }
+    },
+    {
+      "amd": {
+        "analyse_ms": 33.144167,
+        "assemble_ms": 5.473,
+        "factor_and_solve_ms": 183.608375,
+        "nnz_l": 3078048,
+        "unknowns": 104997
+      },
+      "closures": 22253,
+      "dense": null,
+      "natural": null,
+      "nodes": 35000,
+      "rcm": {
+        "analyse_ms": 94.349,
+        "assemble_ms": 7.560875,
+        "factor_and_solve_ms": 6780.323917000001,
+        "nnz_l": 34011534,
+        "unknowns": 104997
+      }
+    }
+  ],
+  "statistic": "median over repeats, in milliseconds"
+}

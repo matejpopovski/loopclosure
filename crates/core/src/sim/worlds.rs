@@ -33,14 +33,14 @@ impl WorldKind {
     }
 
     pub fn build(self, seed: u64) -> World {
-        let mut b = Builder {
+        let builder = Builder {
             segments: Vec::new(),
             rng: Rng::new(seed ^ 0xB10C_C0DE),
         };
         match self {
-            WorldKind::Office => office(&mut b),
-            WorldKind::Warehouse => warehouse(&mut b),
-            WorldKind::Atrium => atrium(&mut b),
+            WorldKind::Office => office(builder),
+            WorldKind::Warehouse => warehouse(builder),
+            WorldKind::Atrium => atrium(builder),
         }
     }
 }
@@ -138,7 +138,7 @@ impl Builder {
     }
 }
 
-fn office(b: &mut Builder) -> World {
+fn office(mut b: Builder) -> World {
     let (w, h) = (64.0, 44.0);
     b.rect(0.0, 0.0, w, h);
     // Four blocks of rooms, separated by a ring corridor and a central cross.
@@ -167,10 +167,10 @@ fn office(b: &mut Builder) -> World {
         [w1, cy],
         [cx, cy],
     ];
-    std::mem::take(b).finish("office", route)
+    b.finish("office", route)
 }
 
-fn warehouse(b: &mut Builder) -> World {
+fn warehouse(mut b: Builder) -> World {
     let (w, h) = (48.0, 33.0);
     b.rect(0.0, 0.0, w, h);
     const PITCH: f64 = 2.7;
@@ -213,10 +213,10 @@ fn warehouse(b: &mut Builder) -> World {
         [w0, aisles[4]],
         [w1, aisles[4]],
     ];
-    std::mem::take(b).finish("warehouse", route)
+    b.finish("warehouse", route)
 }
 
-fn atrium(b: &mut Builder) -> World {
+fn atrium(mut b: Builder) -> World {
     b.polyline(&[
         [0.0, 6.0],
         [8.0, 0.0],
@@ -271,7 +271,7 @@ fn atrium(b: &mut Builder) -> World {
         [7.0, 21.0],
         [10.0, 7.0],
     ];
-    std::mem::take(b).finish("atrium", route)
+    b.finish("atrium", route)
 }
 
 struct Keepout {
@@ -314,12 +314,3 @@ const ROUTE_CLEARANCE: [Keepout; 4] = [
         y1: 37.0,
     },
 ];
-
-impl Default for Builder {
-    fn default() -> Self {
-        Self {
-            segments: Vec::new(),
-            rng: Rng::new(0),
-        }
-    }
-}

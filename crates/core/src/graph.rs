@@ -117,7 +117,7 @@ impl Default for OptimizeOptions {
             max_iterations: 15,
             relative_tolerance: 1e-5,
             ordering: Ordering::ApproximateMinimumDegree,
-            loop_kernel: RobustKernel::Dcs { phi: 10.0 },
+            loop_kernel: RobustKernel::Dcs { phi: 100.0 },
         }
     }
 }
@@ -374,32 +374,54 @@ impl PoseGraph {
             .sum()
     }
 
-    /// Optimise while tightening the kernel in stages.
+    /// Optimise from two starts and keep whichever ends at the lower cost under
+    /// the tight kernel.
     ///
-    /// A correct closure after a long drive has a large error, and a tight
-    /// kernel cannot tell that from an outlier: it would switch the edge off at
-    /// the moment it is needed. Starting wide lets true closures pull the graph
-    /// into place, after which the final tight stage sheds whatever still
-    /// disagrees. This is the idea behind graduated non-convexity (Yang et al.,
-    /// RA-L 2020), with a short fixed schedule because online optimisation runs
-    /// from a good initial guess.
+    /// A tight kernel cannot tell a correct closure after a long drive from an
+    /// outlier, because both have a large error, so applied alone it can switch
+    /// off the closures that matter most. The cure is to begin with a wide kernel
+    /// and tighten in stages, as in graduated non-convexity (Yang et al., RA-L
+    /// 2020), which lets true closures pull the graph into place. But a wide
+    /// kernel also lets false closures in, and they can leave lasting damage.
+    ///
+    /// Neither start is right every time, and both are descending the same
+    /// objective, so the objective decides. On the Intel log the graduated start
+    /// wins, and with false closures injected into a converged graph the tight
+    /// start does. For this to work the kernel must price an ignored closure
+    /// above the cost of bending the chain to satisfy a true one, which is what
+    /// sets `phi`: at 30 the real log leaves true closures switched off, at 100
+    /// it does not.
     pub fn optimize_graduated(&mut self, options: &OptimizeOptions) -> OptimizeReport {
+        let start = self.poses.clone();
+        let tight = self.optimize(options);
+        let tight_poses = std::mem::replace(&mut self.poses, start);
+        let graduated = self.optimize_wide_first(options);
+        if tight.final_cost <= graduated.final_cost {
+            self.poses = tight_poses;
+            tight
+        } else {
+            graduated
+        }
+    }
+
+    /// Optimise while tightening the kernel in stages, ending at the tight one.
+    pub fn optimize_wide_first(&mut self, options: &OptimizeOptions) -> OptimizeReport {
         const SCHEDULE: [f64; 3] = [1000.0, 30.0, 1.0];
-        let mut report = OptimizeReport::default();
+        let mut merged = OptimizeReport::default();
         for (stage, factor) in SCHEDULE.into_iter().enumerate() {
-            let stage_report = self.optimize(&OptimizeOptions {
+            let report = self.optimize(&OptimizeOptions {
                 loop_kernel: options.loop_kernel.widened(factor),
                 ..*options
             });
             if stage == 0 {
-                report.initial_cost = stage_report.initial_cost;
+                merged.initial_cost = report.initial_cost;
             }
-            report.iterations += stage_report.iterations;
-            report.rejected_steps += stage_report.rejected_steps;
-            report.final_cost = stage_report.final_cost;
-            report.nnz_l = stage_report.nnz_l;
+            merged.iterations += report.iterations;
+            merged.rejected_steps += report.rejected_steps;
+            merged.final_cost = report.final_cost;
+            merged.nnz_l = report.nnz_l;
         }
-        report
+        merged
     }
 
     fn apply(&self, step: &[f64]) -> Vec<Pose2> {
@@ -765,6 +787,42 @@ mod tests {
         graduated.optimize_graduated(&options);
         assert!(gap(&graduated) < 0.2, "graduated {}", gap(&graduated));
         assert!(gap(&tight) > 1.0, "tight {}", gap(&tight));
+    }
+
+    #[test]
+    fn two_starts_keep_a_converged_graph_when_false_closures_arrive() {
+        let (truth, mut edges) = ring(60);
+        for e in &mut edges {
+            e.information = [[2500.0, 0.0, 0.0], [0.0, 2500.0, 0.0], [0.0, 0.0, 10000.0]];
+        }
+        let mut rng = Rng::new(25);
+        for _ in 0..12 {
+            let (from, to) = (rng.below(25), 30 + rng.below(29));
+            let wrong = truth[from].between(truth[to]).compose(Pose2::new(
+                rng.uniform(-4.0, 4.0),
+                rng.uniform(-4.0, 4.0),
+                rng.uniform(-0.5, 0.5),
+            ));
+            let mut bad = edge(from, to, wrong, EdgeKind::LoopClosure);
+            bad.information = [[400.0, 0.0, 0.0], [0.0, 400.0, 0.0], [0.0, 0.0, 1600.0]];
+            edges.push(bad);
+        }
+        let mut graph = PoseGraph {
+            poses: truth.clone(),
+            edges,
+        };
+        graph.optimize_graduated(&OptimizeOptions {
+            max_iterations: 40,
+            loop_kernel: RobustKernel::Dcs { phi: 10.0 },
+            ..Default::default()
+        });
+        let worst = graph
+            .poses
+            .iter()
+            .zip(&truth)
+            .map(|(a, b)| a.distance_to(*b))
+            .fold(0.0, f64::max);
+        assert!(worst < 0.05, "worst error {worst}");
     }
 
     #[test]

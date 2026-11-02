@@ -1,0 +1,109 @@
+{
+  "command": "loopclosure aliasing --seeds 10",
+  "rows": [
+    {
+      "configuration": "radius 2 m",
+      "radius_max_m": 2.0,
+      "worlds": [
+        {
+          "ate_rmse_m": {
+            "max": 0.10723174112711605,
+            "mean": 0.09090675286174624,
+            "median": 0.08960706868991244,
+            "std": 0.011448819808874482
+          },
+          "closures_per_run": 82.6,
+          "false_closures_total": 0,
+          "world": "warehouse"
+        }
+      ]
+    },
+    {
+      "configuration": "radius 3 m",
+      "radius_max_m": 3.0,
+      "worlds": [
+        {
+          "ate_rmse_m": {
+            "max": 0.11092439250647751,
+            "mean": 0.09075097720266953,
+            "median": 0.0875709465442727,
+            "std": 0.012038049404034508
+          },
+          "closures_per_run": 83.3,
+          "false_closures_total": 0,
+          "world": "warehouse"
+        }
+      ]
+    },
+    {
+      "configuration": "radius 4 m",
+      "radius_max_m": 4.0,
+      "worlds": [
+        {
+          "ate_rmse_m": {
+            "max": 0.11070400233215247,
+            "mean": 0.08606792639070761,
+            "median": 0.08473151267204215,
+            "std": 0.013068992744068364
+          },
+          "closures_per_run": 83.7,
+          "false_closures_total": 0,
+          "world": "warehouse"
+        }
+      ]
+    },
+    {
+      "configuration": "radius 5 m",
+      "radius_max_m": 5.0,
+      "worlds": [
+        {
+          "ate_rmse_m": {
+            "max": 0.11111174846074505,
+            "mean": 0.09013281127090961,
+            "median": 0.086475867233245,
+            "std": 0.012187327774200847
+          },
+          "closures_per_run": 83.5,
+          "false_closures_total": 0,
+          "world": "warehouse"
+        }
+      ]
+    },
+    {
+      "configuration": "radius 6 m",
+      "radius_max_m": 6.0,
+      "worlds": [
+        {
+          "ate_rmse_m": {
+            "max": 3.357038761238914,
+            "mean": 1.5208646473799754,
+            "median": 2.6999155732847213,
+            "std": 1.5239196125011452
+          },
+          "closures_per_run": 68.8,
+          "false_closures_total": 112,
+          "world": "warehouse"
+        }
+      ]
+    },
+    {
+      "configuration": "radius 8 m",
+      "radius_max_m": 8.0,
+      "worlds": [
+        {
+          "ate_rmse_m": {
+            "max": 4.235284961643295,
+            "mean": 2.4932050938258317,
+            "median": 2.7380421969923363,
+            "std": 1.7914549473594334
+          },
+          "closures_per_run": 53.7,
+          "false_closures_total": 162,
+          "world": "warehouse"
+        }
+      ]
+    }
+  ],
+  "seeds": "0..10",
+  "source": "simulator warehouse; aisles repeat every 6 m and bays every 2.7 m"
+}
