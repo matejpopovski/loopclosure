@@ -1,0 +1,26 @@
+{
+  "command": "cd e2e && npm run capture",
+  "browser": "Playwright Chromium, headless",
+  "hardware": "Apple M3 Max, 36 GB; other jobs were running on the machine",
+  "note": "each keyframe runs two SLAM instances, and wall time includes redrawing both maps",
+  "runs": {
+    "office": {
+      "keyframes": 1464,
+      "closures": 111,
+      "wall_seconds_with_drawing": 13.256,
+      "recent_step_ms": 6.723000000044704
+    },
+    "warehouse": {
+      "keyframes": 1036,
+      "closures": 80,
+      "wall_seconds_with_drawing": 8.753,
+      "recent_step_ms": 7.12699999999255
+    },
+    "intel": {
+      "keyframes": 2273,
+      "closures": 285,
+      "wall_seconds_with_drawing": 18.012,
+      "recent_step_ms": 7.897499999962747
+    }
+  }
+}

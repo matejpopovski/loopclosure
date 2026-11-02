@@ -1,0 +1,12 @@
+{
+  "name": "loopclosure-e2e",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "test": "playwright test",
+    "capture": "CAPTURE=1 playwright test capture.spec.js"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.49.1"
+  }
+}

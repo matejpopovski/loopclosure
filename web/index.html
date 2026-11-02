@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>loopclosure</title>
+  <meta name="description" content="2D LiDAR graph SLAM written in Rust, running in the browser through WebAssembly.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div>
+      <h1>loopclosure</h1>
+      <p>2D LiDAR graph SLAM in Rust, running here through WebAssembly. Both maps are built from the same scans. Only the right one may close loops.</p>
+    </div>
+    <a href="https://github.com/matejpopovski/loopclosure">source</a>
+  </header>
+
+  <section class="controls" aria-label="Run settings">
+    <label>Input
+      <select id="input">
+        <option value="office">Simulated office</option>
+        <option value="warehouse">Simulated warehouse</option>
+        <option value="atrium">Simulated atrium</option>
+        <option value="intel">Intel Research Lab log (real)</option>
+      </select>
+    </label>
+    <label class="sim-only">Seed
+      <input id="seed" type="number" min="0" max="9999" value="0">
+    </label>
+    <label class="sim-only">Odometry error
+      <select id="noise">
+        <option value="0.5">0.5x</option>
+        <option value="1" selected>1x</option>
+        <option value="2">2x</option>
+        <option value="4">4x</option>
+      </select>
+    </label>
+    <label>Speed
+      <select id="speed">
+        <option value="1">1 keyframe per frame</option>
+        <option value="4" selected>4 per frame</option>
+        <option value="16">16 per frame</option>
+        <option value="1000">as fast as possible</option>
+      </select>
+    </label>
+    <label class="check sim-only"><input id="walls" type="checkbox" checked> True walls</label>
+    <button id="play" type="button">Pause</button>
+    <button id="restart" type="button">Restart</button>
+  </section>
+
+  <main>
+    <section class="maps">
+      <figure>
+        <figcaption><span class="swatch without"></span>Without loop closure</figcaption>
+        <canvas id="open" aria-label="Occupancy map built without loop closure"></canvas>
+      </figure>
+      <figure>
+        <figcaption><span class="swatch with"></span>With loop closure</figcaption>
+        <canvas id="closed" aria-label="Occupancy map built with loop closure"></canvas>
+      </figure>
+    </section>
+
+    <section class="readout" aria-label="Live measurements">
+      <dl>
+        <div><dt id="label-path">Distance driven</dt><dd id="stat-path">-</dd></div>
+        <div class="sim-only"><dt>Error without closure</dt><dd id="stat-open">-</dd></div>
+        <div class="sim-only"><dt>Error with closure</dt><dd id="stat-closed">-</dd></div>
+        <div><dt>Keyframes</dt><dd id="stat-keyframes">0</dd></div>
+        <div><dt>Loop closures</dt><dd id="stat-closures">0</dd></div>
+        <div><dt>Step time</dt><dd id="stat-time">-</dd></div>
+      </dl>
+      <figure class="chart sim-only">
+        <figcaption>Position error against ground truth, as believed at the time</figcaption>
+        <div class="chart-area">
+          <canvas id="chart" aria-label="Position error against distance driven"></canvas>
+          <div id="tip" class="tip" hidden></div>
+        </div>
+      </figure>
+      <p id="note" class="note"></p>
+    </section>
+  </main>
+  <script type="module" src="main.js"></script>
+</body>
+</html>

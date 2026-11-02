@@ -23,6 +23,6 @@ pub fn write_json(path: &Path, value: &Value) -> Result<(), Box<dyn std::error::
         fs::create_dir_all(parent)?;
     }
     fs::write(path, serde_json::to_string_pretty(value)? + "\n")?;
-    println!("wrote {}", path.display());
+    eprintln!("wrote {}", path.display());
     Ok(())
 }

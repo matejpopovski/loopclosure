@@ -69,7 +69,7 @@ pub fn write_map(
     encoder.set_color(png::ColorType::Rgb);
     encoder.set_depth(png::BitDepth::Eight);
     encoder.write_header()?.write_image_data(&crop_rgb)?;
-    println!("wrote {}", path.display());
+    eprintln!("wrote {}", path.display());
     Ok(())
 }
 

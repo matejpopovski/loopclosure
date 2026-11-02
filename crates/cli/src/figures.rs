@@ -148,6 +148,6 @@ pub fn figures(results: &Path) -> Result<(), Box<dyn std::error::Error>> {
     fs::create_dir_all(&dir)?;
     let path = dir.join("drift_curves.svg");
     fs::write(&path, drift_curves(list))?;
-    println!("wrote {}", path.display());
+    eprintln!("wrote {}", path.display());
     Ok(())
 }
